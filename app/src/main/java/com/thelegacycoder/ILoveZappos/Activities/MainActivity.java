@@ -1,4 +1,4 @@
-package com.thelegacycoder.ILoveZappos;
+package com.thelegacycoder.ILoveZappos.Activities;
 
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -10,6 +10,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.thelegacycoder.ILoveZappos.Adapters.ListViewAdapter;
+import com.thelegacycoder.ILoveZappos.Interfaces.ZapposAPI;
+import com.thelegacycoder.ILoveZappos.Models.SearchResponse;
+import com.thelegacycoder.ILoveZappos.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;

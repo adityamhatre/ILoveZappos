@@ -1,4 +1,4 @@
-package com.thelegacycoder.ILoveZappos;
+package com.thelegacycoder.ILoveZappos.Models;
 
 import java.util.List;
 

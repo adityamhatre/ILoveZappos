@@ -1,4 +1,6 @@
-package com.thelegacycoder.ILoveZappos;
+package com.thelegacycoder.ILoveZappos.Interfaces;
+
+import com.thelegacycoder.ILoveZappos.Models.SearchResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
