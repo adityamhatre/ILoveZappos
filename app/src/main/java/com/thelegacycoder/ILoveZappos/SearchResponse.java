@@ -1,11 +1,11 @@
-package com.thelegacycoder.zappos;
+package com.thelegacycoder.ILoveZappos;
 
 import java.util.List;
 
 public class SearchResponse{
 	private String originalTerm;
-	private String currentResultCount;
-	private String totalResultCount;
+	private int currentResultCount;
+	private int totalResultCount;
 	private String term;
 	private List<ResultsItem> results;
 	private String statusCode;
@@ -18,19 +18,19 @@ public class SearchResponse{
 		return originalTerm;
 	}
 
-	public void setCurrentResultCount(String currentResultCount){
+	public void setCurrentResultCount(int currentResultCount){
 		this.currentResultCount = currentResultCount;
 	}
 
-	public String getCurrentResultCount(){
+	public int getCurrentResultCount(){
 		return currentResultCount;
 	}
 
-	public void setTotalResultCount(String totalResultCount){
+	public void setTotalResultCount(int totalResultCount){
 		this.totalResultCount = totalResultCount;
 	}
 
-	public String getTotalResultCount(){
+	public int getTotalResultCount(){
 		return totalResultCount;
 	}
 
@@ -56,5 +56,17 @@ public class SearchResponse{
 
 	public String getStatusCode(){
 		return statusCode;
+	}
+
+	@Override
+	public String toString() {
+		return "SearchResponse{" +
+				"originalTerm='" + originalTerm + '\'' +
+				", currentResultCount='" + currentResultCount + '\'' +
+				", totalResultCount='" + totalResultCount + '\'' +
+				", term='" + term + '\'' +
+				", results=" + results +
+				", statusCode='" + statusCode + '\'' +
+				'}';
 	}
 }

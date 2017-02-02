@@ -1,4 +1,4 @@
-package com.thelegacycoder.zappos;
+package com.thelegacycoder.ILoveZappos;
 
 import org.junit.Test;
 
