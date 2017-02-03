@@ -1,5 +1,11 @@
 package com.thelegacycoder.ILoveZappos.Models;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
+import com.thelegacycoder.ILoveZappos.R;
+
 public class ResultsItem {
     private String brandName;
     private String thumbnailImageUrl;
@@ -11,6 +17,21 @@ public class ResultsItem {
     private String percentOff;
     private String productUrl;
     private String productName;
+
+    private float moneySaved = 0;
+
+    public ResultsItem(String brandName, String thumbnailImageUrl, String productId, String originalPrice, String styleId, String colorId, String price, String percentOff, String productUrl, String productName) {
+        this.brandName = brandName;
+        this.thumbnailImageUrl = thumbnailImageUrl;
+        this.productId = productId;
+        this.originalPrice = originalPrice;
+        this.styleId = styleId;
+        this.colorId = colorId;
+        this.price = price;
+        this.percentOff = percentOff;
+        this.productUrl = productUrl;
+        this.productName = productName;
+    }
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
@@ -73,7 +94,7 @@ public class ResultsItem {
     }
 
     public String getPercentOff() {
-        return percentOff;
+        return percentOff + " OFF";
     }
 
     public void setProductUrl(String productUrl) {
@@ -92,6 +113,10 @@ public class ResultsItem {
         return productName;
     }
 
+    public String getMoneySaved() {
+        return "You save $" + (Float.parseFloat(getPrice().trim().replace("$", "")) - Float.parseFloat(getPrice().trim().replace("$", "")));
+    }
+
     @Override
     public String toString() {
         return "ResultsItem{" +
@@ -106,5 +131,13 @@ public class ResultsItem {
                 ", productUrl='" + productUrl + '\'' +
                 ", productName='" + productName + '\'' +
                 '}';
+    }
+
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView view, String thumbnailImageUrl) {
+        Picasso.with(view.getContext())
+                .load(thumbnailImageUrl)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(view);
     }
 }
