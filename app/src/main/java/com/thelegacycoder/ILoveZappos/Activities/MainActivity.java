@@ -1,18 +1,18 @@
 package com.thelegacycoder.ILoveZappos.Activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thelegacycoder.ILoveZappos.Adapters.ListViewAdapter;
@@ -28,9 +28,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements Callback<SearchResponse> {
     private ListView listView;
     private ZapposAPI zapposAPI;
-    private AlertDialog alertDialog = null;
     private ListViewAdapter listViewAdapter;
     private Call<SearchResponse> call;
+    private EditText searchBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,31 +56,14 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add("Search").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        menu.add("Cart").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                final EditText editText = new EditText(MainActivity.this);
-                final LinearLayout linearLayout = new LinearLayout(MainActivity.this);
 
-                linearLayout.addView(editText);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
-                builder.setView(linearLayout);
-                builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        search(editText.getText().toString());
-                        alertDialog.dismiss();
-                    }
-                });
-
-                alertDialog = builder.create();
-                alertDialog.show();
 
                 return false;
             }
-        }).setIcon(android.R.drawable.ic_menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }).setIcon(android.R.drawable.btn_star).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
        /* menu.add("Search").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -99,10 +82,29 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
 
     private void initViews() {
         listView = (ListView) findViewById(R.id.listView);
+        searchBox = (EditText) findViewById(R.id.search_box);
+
+        searchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionID, KeyEvent keyEvent) {
+                if (actionID == EditorInfo.IME_ACTION_SEARCH) {
+                    search(searchBox.getText().toString());
+                }
+                return false;
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 startActivity(new Intent(MainActivity.this, ProductViewActivity.class).putExtra("productIndex", i));
+            }
+        });
+
+        findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                search(searchBox.getText().toString());
             }
         });
     }

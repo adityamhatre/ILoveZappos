@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.thelegacycoder.ILoveZappos.AppController.AppController;
 import com.thelegacycoder.ILoveZappos.Models.ResultsItem;
@@ -27,7 +28,8 @@ public class ProductViewActivity extends AppCompatActivity {
 
         if (resultsItem.getPercentOff().replace(" OFF", "").trim().equalsIgnoreCase("0%")) {
             System.out.println("hiding");
-            //  findViewById(R.id.offerDetails).setVisibility(View.GONE);
+            findViewById(R.id.offerDetails).setVisibility(View.GONE);
+            findViewById(R.id.productSaved).setVisibility(View.GONE);
         } else System.out.println("not hiding");
 
         System.out.println(resultsItem);

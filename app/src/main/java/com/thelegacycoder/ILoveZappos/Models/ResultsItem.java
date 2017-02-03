@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.thelegacycoder.ILoveZappos.R;
 
+import java.text.DecimalFormat;
+
 public class ResultsItem {
     private String brandName;
     private String thumbnailImageUrl;
@@ -114,7 +116,11 @@ public class ResultsItem {
     }
 
     public String getMoneySaved() {
-        return "You save $" + (Float.parseFloat(getPrice().trim().replace("$", "")) - Float.parseFloat(getPrice().trim().replace("$", "")));
+        double before, after;
+        before = Double.parseDouble(getOriginalPrice().trim().replace("$", ""));
+        after = Double.parseDouble(getPrice().trim().replace("$", ""));
+        DecimalFormat df = new DecimalFormat("###.##");
+        return "You save $" + df.format(before - after);
     }
 
     @Override
