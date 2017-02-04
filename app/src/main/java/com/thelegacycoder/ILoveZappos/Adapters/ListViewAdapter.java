@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.thelegacycoder.ILoveZappos.Models.ResultsItem;
+import com.thelegacycoder.ILoveZappos.R;
 
 import java.util.List;
 
@@ -49,10 +52,10 @@ public class ListViewAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
             //convertView = inflater.inflate(R.layout.product_item, null);
-            convertView = inflater.inflate(android.R.layout.simple_list_item_1, null);
+            convertView = inflater.inflate(R.layout.product_tile, null);
             viewHolder = new ViewHolder();
-            viewHolder.productName = (TextView) convertView.findViewById(android.R.id.text1);
-
+            viewHolder.productName = (TextView) convertView.findViewById(R.id.productName);
+            viewHolder.productImage = (ImageView) convertView.findViewById(R.id.product_image);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -60,7 +63,9 @@ public class ListViewAdapter extends BaseAdapter {
 
         ResultsItem resultsItem = (ResultsItem) getItem(i);
         viewHolder.productName.setText(resultsItem.getProductName());
-
+        Picasso.with(context)
+                .load(((ResultsItem) (getItem(i))).getThumbnailImageUrl())
+                .into(viewHolder.productImage);
 
         return convertView;
     }
@@ -68,5 +73,6 @@ public class ListViewAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView productName;
+        ImageView productImage;
     }
 }

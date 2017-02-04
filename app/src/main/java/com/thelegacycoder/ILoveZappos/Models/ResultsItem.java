@@ -20,8 +20,6 @@ public class ResultsItem {
     private String productUrl;
     private String productName;
 
-    private float moneySaved = 0;
-
     public ResultsItem(String brandName, String thumbnailImageUrl, String productId, String originalPrice, String styleId, String colorId, String price, String percentOff, String productUrl, String productName) {
         this.brandName = brandName;
         this.thumbnailImageUrl = thumbnailImageUrl;

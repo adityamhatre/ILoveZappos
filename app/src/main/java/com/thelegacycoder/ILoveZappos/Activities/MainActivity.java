@@ -1,5 +1,6 @@
 package com.thelegacycoder.ILoveZappos.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -105,13 +107,16 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
             @Override
             public void onClick(View view) {
                 search(searchBox.getText().toString());
+                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
     }
 
     @Override
     public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+        //   if (listViewAdapter == null)
         listViewAdapter = new ListViewAdapter(this, response.body().getResults());
+        // else listViewAdapter.notifyDataSetChanged();
         AppController.getInstance().setProducts(response.body().getResults());
         if (response.body().getTotalResultCount() == 0) {
             Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
