@@ -8,7 +8,7 @@ import com.thelegacycoder.ILoveZappos.R;
 
 import java.text.DecimalFormat;
 
-public class ResultsItem {
+public class ProductItem {
     private String brandName;
     private String thumbnailImageUrl;
     private String productId;
@@ -20,7 +20,7 @@ public class ResultsItem {
     private String productUrl;
     private String productName;
 
-    public ResultsItem(String brandName, String thumbnailImageUrl, String productId, String originalPrice, String styleId, String colorId, String price, String percentOff, String productUrl, String productName) {
+    public ProductItem(String brandName, String thumbnailImageUrl, String productId, String originalPrice, String styleId, String colorId, String price, String percentOff, String productUrl, String productName) {
         this.brandName = brandName;
         this.thumbnailImageUrl = thumbnailImageUrl;
         this.productId = productId;
@@ -123,7 +123,7 @@ public class ResultsItem {
 
     @Override
     public String toString() {
-        return "ResultsItem{" +
+        return "ProductItem{" +
                 "brandName='" + brandName + '\'' +
                 ", thumbnailImageUrl='" + thumbnailImageUrl + '\'' +
                 ", productId='" + productId + '\'' +

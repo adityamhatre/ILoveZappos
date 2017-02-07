@@ -31,9 +31,7 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.ProductViewActivity"
-            android:theme="@style/NoActionBar" />
+        <activity android:name=".Activities.ProductViewActivity" />
     </application>
 
 </manifest>

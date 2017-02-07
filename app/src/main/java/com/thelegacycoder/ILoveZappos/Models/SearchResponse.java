@@ -7,7 +7,7 @@ public class SearchResponse{
 	private int currentResultCount;
 	private int totalResultCount;
 	private String term;
-	private List<ResultsItem> results;
+	private List<ProductItem> results;
 	private String statusCode;
 
 	public void setOriginalTerm(String originalTerm){
@@ -42,11 +42,11 @@ public class SearchResponse{
 		return term;
 	}
 
-	public void setResults(List<ResultsItem> results){
+	public void setResults(List<ProductItem> results){
 		this.results = results;
 	}
 
-	public List<ResultsItem> getResults(){
+	public List<ProductItem> getResults(){
 		return results;
 	}
 

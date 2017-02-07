@@ -4,7 +4,7 @@ import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 
-import com.thelegacycoder.ILoveZappos.Models.ResultsItem;
+import com.thelegacycoder.ILoveZappos.Models.ProductItem;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class AppController extends Application {
 
     private Context context;
     private ProgressDialog progressDialog;
-    private List<ResultsItem> products;
+    private List<ProductItem> products;
 
     @Override
     public void onCreate() {
@@ -54,6 +54,7 @@ public class AppController extends Application {
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
     }
 
     public void dismissLoading() {
@@ -62,11 +63,11 @@ public class AppController extends Application {
         }
     }
 
-    public void setProducts(List<ResultsItem> products) {
+    public void setProducts(List<ProductItem> products) {
         this.products = products;
     }
 
-    public List<ResultsItem> getProducts() {
+    public List<ProductItem> getProducts() {
         return products;
     }
 }

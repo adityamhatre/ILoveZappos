@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.thelegacycoder.ILoveZappos.Models.ResultsItem;
+import com.thelegacycoder.ILoveZappos.Models.ProductItem;
 import com.thelegacycoder.ILoveZappos.R;
 
 import java.util.List;
@@ -22,21 +22,27 @@ public class ListViewAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
-    List<ResultsItem> resultsItemList;
+    List<ProductItem> productItemList;
 
-    public ListViewAdapter(Context context, List<ResultsItem> resultsItemList) {
+    public ListViewAdapter(Context context, List<ProductItem> productItemList) {
         this.context = context;
-        this.resultsItemList = resultsItemList;
+        this.productItemList = productItemList;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        System.out.println(getItem(0));
+        super.notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return resultsItemList.size();
+        return productItemList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return resultsItemList.get(i);
+        return productItemList.get(i);
     }
 
     @Override
@@ -61,17 +67,17 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        ResultsItem resultsItem = (ResultsItem) getItem(i);
-        viewHolder.productName.setText(resultsItem.getProductName());
+        ProductItem productItem = (ProductItem) getItem(i);
+        viewHolder.productName.setText(productItem.getProductName());
         Picasso.with(context)
-                .load(((ResultsItem) (getItem(i))).getThumbnailImageUrl())
+                .load(((ProductItem) (getItem(i))).getThumbnailImageUrl())
                 .into(viewHolder.productImage);
 
         return convertView;
     }
 
 
-    static class ViewHolder {
+    private static class ViewHolder {
         TextView productName;
         ImageView productImage;
     }

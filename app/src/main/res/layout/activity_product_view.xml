@@ -6,7 +6,7 @@
 
         <variable
             name="product"
-            type="com.thelegacycoder.ILoveZappos.Models.ResultsItem" />
+            type="com.thelegacycoder.ILoveZappos.Models.ProductItem" />
     </data>
 
     <RelativeLayout
@@ -15,19 +15,9 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:focusable="false"
-            android:title="@{product.productName}"
-            app:titleTextColor="@android:color/white" />
-
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar">
+            android:layout_height="match_parent">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -120,6 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                         android:text="@{product.moneySaved}"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
@@ -133,10 +124,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:clickable="true"
-            android:src="@android:drawable/ic_input_add"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_cart"
             app:elevation="@dimen/activity_horizontal_margin"
+            app:fabSize="normal"
             app:useCompatPadding="true" />
 
     </RelativeLayout>
