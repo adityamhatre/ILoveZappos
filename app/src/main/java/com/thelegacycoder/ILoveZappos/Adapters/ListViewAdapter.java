@@ -20,19 +20,13 @@ import java.util.List;
 
 public class ListViewAdapter extends BaseAdapter {
 
-    Context context;
-    LayoutInflater inflater;
-    List<ProductItem> productItemList;
+    private Context context;
+    private LayoutInflater inflater;
+    private List<ProductItem> productItemList;
 
     public ListViewAdapter(Context context, List<ProductItem> productItemList) {
         this.context = context;
         this.productItemList = productItemList;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        System.out.println(getItem(0));
-        super.notifyDataSetChanged();
     }
 
     @Override
@@ -41,23 +35,22 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        return productItemList.get(i);
+    public Object getItem(int index) {
+        return productItemList.get(index);
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
+    public long getItemId(int index) {
+        return index;
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
+    public View getView(int index, View convertView, ViewGroup viewGroup) {
         ViewHolder viewHolder;
         if (inflater == null)
             inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            //convertView = inflater.inflate(R.layout.product_item, null);
             convertView = inflater.inflate(R.layout.product_tile, null);
             viewHolder = new ViewHolder();
             viewHolder.productName = (TextView) convertView.findViewById(R.id.productName);
@@ -67,10 +60,11 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        ProductItem productItem = (ProductItem) getItem(i);
+        ProductItem productItem = (ProductItem) getItem(index);
+
         viewHolder.productName.setText(productItem.getProductName());
         Picasso.with(context)
-                .load(((ProductItem) (getItem(i))).getThumbnailImageUrl())
+                .load(productItem.getThumbnailImageUrl())
                 .into(viewHolder.productImage);
 
         return convertView;

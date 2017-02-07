@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -20,7 +19,7 @@ import com.thelegacycoder.ILoveZappos.Adapters.ListViewAdapter;
 import com.thelegacycoder.ILoveZappos.AppController.AppController;
 import com.thelegacycoder.ILoveZappos.Interfaces.ZapposAPI;
 import com.thelegacycoder.ILoveZappos.Models.ProductItem;
-import com.thelegacycoder.ILoveZappos.Models.SearchResponse;
+import com.thelegacycoder.ILoveZappos.Models.SearchAPIResponse;
 import com.thelegacycoder.ILoveZappos.R;
 
 import java.util.List;
@@ -29,11 +28,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements Callback<SearchResponse> {
+public class MainActivity extends AppCompatActivity implements Callback<SearchAPIResponse> {
     private GridView gridView;
     private ZapposAPI zapposAPI;
     private ListViewAdapter listViewAdapter;
-    private Call<SearchResponse> call;
+    private Call<SearchAPIResponse> call;
     private EditText searchBox;
     private View searchView;
     private Boolean firstTime = true;
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
         setContentView(R.layout.activity_main);
 
         initViews();
+        initActionListeners();
         initAPI();
 
         Uri data = getIntent().getData();
@@ -56,31 +56,12 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
         }
 
 
-        if(savedInstanceState!=null && savedInstanceState.containsKey("search")){
+        if (savedInstanceState != null && savedInstanceState.containsKey("search")) {
             searchProduct(savedInstanceState.getString("search"));
         }
     }
 
-    private void initAPI() {
-        zapposAPI = AppController.getInstance().getRetrofit().create(ZapposAPI.class);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    private void searchProduct(String searchQuery) {
-        call = zapposAPI.searchQuery(searchQuery, getString(R.string.zappos_key));
-        AppController.getInstance().showLoading(this);
-        call.enqueue(this);
-    }
-
-    private void initViews() {
-        gridView = (GridView) findViewById(R.id.grid_view);
-        searchBox = (EditText) findViewById(R.id.search_box);
-        searchView = findViewById(R.id.search_view);
-
+    private void initActionListeners() {
         searchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionID, KeyEvent keyEvent) {
@@ -107,8 +88,25 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
         });
     }
 
+    private void initAPI() {
+        zapposAPI = AppController.getInstance().getRetrofit().create(ZapposAPI.class);
+    }
+
+
+    private void searchProduct(String searchTerm) {
+        call = zapposAPI.searchQuery(searchTerm, getString(R.string.zappos_key));
+        AppController.getInstance().showLoading(this);
+        call.enqueue(this);
+    }
+
+    private void initViews() {
+        gridView = (GridView) findViewById(R.id.grid_view);
+        searchBox = (EditText) findViewById(R.id.search_box);
+        searchView = findViewById(R.id.search_view);
+    }
+
     @Override
-    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+    public void onResponse(Call<SearchAPIResponse> call, Response<SearchAPIResponse> response) {
         searchView.setVisibility(View.GONE);
         AppController.getInstance().setProducts(response.body().getResults());
 
@@ -124,7 +122,8 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
                 listViewAdapter.notifyDataSetChanged();
             }
 
-        if (response.body().getTotalResultCount() == 0) {
+            //if (response.body().getTotalResultCount() == 0) {
+        else {
             Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
             searchView.setVisibility(View.VISIBLE);
         }
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
     }
 
     @Override
-    public void onFailure(Call<SearchResponse> call, Throwable t) {
+    public void onFailure(Call<SearchAPIResponse> call, Throwable t) {
         AppController.getInstance().dismissLoading();
         Toast.makeText(this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
     }
@@ -143,6 +142,5 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchRe
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("search", searchBox.getText().toString());
         super.onSaveInstanceState(outState);
-
     }
 }

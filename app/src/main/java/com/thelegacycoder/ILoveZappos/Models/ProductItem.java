@@ -117,6 +117,7 @@ public class ProductItem {
         double before, after;
         before = Double.parseDouble(getOriginalPrice().trim().replace("$", ""));
         after = Double.parseDouble(getPrice().trim().replace("$", ""));
+
         DecimalFormat df = new DecimalFormat("###.##");
         return "You save $" + df.format(before - after);
     }

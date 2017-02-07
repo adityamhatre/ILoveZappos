@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Aditya on 002, 2 Feb, 2017.
  */
 
+
 public class AppController extends Application {
     public static final String BASE_URL = "https://api.zappos.com/";
     private static AppController appController;
@@ -24,11 +25,16 @@ public class AppController extends Application {
     private ProgressDialog progressDialog;
     private List<ProductItem> products;
 
+    private static final Object lock = new Object();
+
     @Override
+
     public void onCreate() {
         super.onCreate();
         initRetroFit();
-        appController = this;
+        synchronized (lock) {
+            appController = this;
+        }
     }
 
     private void initRetroFit() {
@@ -58,7 +64,7 @@ public class AppController extends Application {
     }
 
     public void dismissLoading() {
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }

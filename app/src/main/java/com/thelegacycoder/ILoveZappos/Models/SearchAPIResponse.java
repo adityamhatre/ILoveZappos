@@ -2,7 +2,7 @@ package com.thelegacycoder.ILoveZappos.Models;
 
 import java.util.List;
 
-public class SearchResponse{
+public class SearchAPIResponse {
 	private String originalTerm;
 	private int currentResultCount;
 	private int totalResultCount;
@@ -60,7 +60,7 @@ public class SearchResponse{
 
 	@Override
 	public String toString() {
-		return "SearchResponse{" +
+		return "SearchAPIResponse{" +
 				"originalTerm='" + originalTerm + '\'' +
 				", currentResultCount='" + currentResultCount + '\'' +
 				", totalResultCount='" + totalResultCount + '\'' +

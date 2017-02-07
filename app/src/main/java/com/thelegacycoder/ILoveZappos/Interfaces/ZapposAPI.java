@@ -1,6 +1,6 @@
 package com.thelegacycoder.ILoveZappos.Interfaces;
 
-import com.thelegacycoder.ILoveZappos.Models.SearchResponse;
+import com.thelegacycoder.ILoveZappos.Models.SearchAPIResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,5 +12,5 @@ import retrofit2.http.Query;
 
 public interface ZapposAPI {
     @GET("/Search")
-    Call<SearchResponse> searchQuery(@Query("term") String tag, @Query("key") String key);
+    Call<SearchAPIResponse> searchQuery(@Query("term") String tag, @Query("key") String key);
 }
