@@ -54,6 +54,8 @@ public class ListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.product_tile, null);
             viewHolder = new ViewHolder();
             viewHolder.productName = (TextView) convertView.findViewById(R.id.productName);
+            viewHolder.productBrand = (TextView) convertView.findViewById(R.id.productBrand);
+            viewHolder.productPrice = (TextView) convertView.findViewById(R.id.productPrice);
             viewHolder.productImage = (ImageView) convertView.findViewById(R.id.product_image);
             convertView.setTag(viewHolder);
         } else {
@@ -63,6 +65,8 @@ public class ListViewAdapter extends BaseAdapter {
         ProductItem productItem = (ProductItem) getItem(index);
 
         viewHolder.productName.setText(productItem.getProductName());
+        viewHolder.productBrand.setText(productItem.getBrandName());
+        viewHolder.productPrice.setText(productItem.getPrice());
         Picasso.with(context)
                 .load(productItem.getThumbnailImageUrl())
                 .into(viewHolder.productImage);
@@ -72,7 +76,7 @@ public class ListViewAdapter extends BaseAdapter {
 
 
     private static class ViewHolder {
-        TextView productName;
+        TextView productName, productBrand, productPrice;
         ImageView productImage;
     }
 }

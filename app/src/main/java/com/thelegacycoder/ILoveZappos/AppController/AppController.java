@@ -25,7 +25,9 @@ public class AppController extends Application {
     private ProgressDialog progressDialog;
     private List<ProductItem> products;
 
+    //http://stackoverflow.com/questions/4457042/best-practice-for-updating-writing-to-static-variable
     private static final Object lock = new Object();
+
 
     @Override
 
