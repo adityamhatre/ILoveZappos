@@ -12,6 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 
@@ -63,7 +64,7 @@ public class ProductViewActivity extends AppCompatActivity {
         view.setVisibility(View.VISIBLE);
 
 
-        View fab = findViewById(R.id.add_to_cart);
+        final View fab = findViewById(R.id.add_to_cart);
 
         AnimationSet animationSet = new AnimationSet(true);
         animationSet.setFillAfter(false);
@@ -85,13 +86,35 @@ public class ProductViewActivity extends AppCompatActivity {
         animationSet.addAnimation(translate);
 
 
+        animationSet.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.INVISIBLE);
+
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         view.startAnimation(animationSet);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                view.setVisibility(View.INVISIBLE);
+                RotateAnimation rotateAnimation = new RotateAnimation(0, -360f, Animation.RELATIVE_TO_SELF,.5f,Animation.RELATIVE_TO_SELF, 0.5f);
+                rotateAnimation.setDuration(500);
+                fab.startAnimation(rotateAnimation);
             }
-        }, 370);
+        }, 300);
+
     }
 
     @Override
