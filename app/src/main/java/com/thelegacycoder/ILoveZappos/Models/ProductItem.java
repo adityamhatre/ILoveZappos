@@ -142,7 +142,7 @@ public class ProductItem {
 	public static void loadImage(ImageView view, String thumbnailImageUrl) {
 		Picasso.with(view.getContext())
 				.load(thumbnailImageUrl)
-				.placeholder(R.mipmap.ic_launcher)
+				.placeholder(R.drawable.ic_placeholder)
 				.into(view);
 	}
 }

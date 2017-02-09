@@ -69,6 +69,7 @@ public class ListViewAdapter extends BaseAdapter {
         viewHolder.productPrice.setText(productItem.getPrice());
         Picasso.with(context)
                 .load(productItem.getThumbnailImageUrl())
+                .placeholder(R.drawable.ic_placeholder)
                 .into(viewHolder.productImage);
 
         return convertView;

@@ -16,7 +16,8 @@
             android:layout_height="75dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_placeholder" />
 
         <LinearLayout
             android:layout_width="match_parent"
