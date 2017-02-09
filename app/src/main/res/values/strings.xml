@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Zappos</string>
     <string name="zappos_key">b743e26728e16b81da139182bb2094357c31d331</string>
+    <string name="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec pharetra mi. Donec dolor leo, auctor varius auctor id, suscipit eget neque. Donec pharetra ut eros sed efficitur. Pellentesque pellentesque dui ac elit luctus, sagittis varius quam auctor. Fusce vel massa vitae eros feugiat dictum in eu velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque est ante, hendrerit eu lacinia facilisis, bibendum at nibh. Phasellus eu massa pulvinar, ornare lectus id, dapibus lectus.</string>
 </resources>

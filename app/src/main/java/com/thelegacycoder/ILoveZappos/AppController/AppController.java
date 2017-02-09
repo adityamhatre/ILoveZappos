@@ -3,6 +3,7 @@ package com.thelegacycoder.ILoveZappos.AppController;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.thelegacycoder.ILoveZappos.Models.ProductItem;
 
@@ -60,9 +61,13 @@ public class AppController extends Application {
         progressDialog = new ProgressDialog(this.context);
         progressDialog.setMessage("Loading...");
         progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+    }
+
+    public void setOnLoadingCancelListener(DialogInterface.OnCancelListener onLoadingCancelListener){
+        progressDialog.setOnCancelListener(onLoadingCancelListener);
     }
 
     public void dismissLoading() {

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
     private View searchView;
     private Boolean firstTime = true;
     private List<ProductItem> productItemList;
+    private View listContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,10 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
             public boolean onEditorAction(TextView textView, int actionID, KeyEvent keyEvent) {
                 if (actionID == EditorInfo.IME_ACTION_SEARCH) {
                     searchProduct(searchBox.getText().toString());
+                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(searchBox.getWindowToken(), 0);
                 }
+
+
                 return false;
             }
         });
@@ -94,15 +98,19 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
 
 
     private void searchProduct(String searchTerm) {
-        call = zapposAPI.searchQuery(searchTerm, getString(R.string.zappos_key));
-        AppController.getInstance().showLoading(this);
-        call.enqueue(this);
+        if (!searchTerm.isEmpty()) {
+            call = zapposAPI.searchQuery(searchTerm, getString(R.string.zappos_key));
+            AppController.getInstance().showLoading(this);
+            call.enqueue(this);
+        }
     }
 
     private void initViews() {
         gridView = (GridView) findViewById(R.id.grid_view);
         searchBox = (EditText) findViewById(R.id.search_box);
         searchView = findViewById(R.id.search_view);
+        listContainer = findViewById(R.id.list_container);
+        hideContainer();
     }
 
     @Override
@@ -110,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
         searchView.setVisibility(View.GONE);
         AppController.getInstance().setProducts(response.body().getResults());
 
-        if (response.body().getResults().size() != 0)
+        if (response.body().getResults().size() != 0) {
             if (firstTime) {
                 productItemList = response.body().getResults();
                 listViewAdapter = new ListViewAdapter(this, productItemList);
@@ -121,14 +129,28 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
                 productItemList.addAll(response.body().getResults());
                 listViewAdapter.notifyDataSetChanged();
             }
-
-            //if (response.body().getTotalResultCount() == 0) {
-        else {
+            showContainer();
+        } else {
             Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
             searchView.setVisibility(View.VISIBLE);
+            if (productItemList != null)
+                productItemList.clear();
+            if (listViewAdapter != null) {
+                listViewAdapter.notifyDataSetChanged();
+            }
+
+            hideContainer();
         }
 
         AppController.getInstance().dismissLoading();
+    }
+
+    private void hideContainer() {
+        listContainer.setVisibility(View.GONE);
+    }
+
+    private void showContainer() {
+        listContainer.setVisibility(View.VISIBLE);
     }
 
     @Override

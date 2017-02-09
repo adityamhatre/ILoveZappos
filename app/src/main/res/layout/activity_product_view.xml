@@ -7,6 +7,10 @@
         <variable
             name="product"
             type="com.thelegacycoder.ILoveZappos.Models.ProductItem" />
+
+        <variable
+            name="detailedProduct"
+            type="com.thelegacycoder.ILoveZappos.Models.DetailedProductItem" />
     </data>
 
     <RelativeLayout
@@ -25,123 +29,133 @@
             app:titleTextColor="@android:color/white" />
 
 
-        <ScrollView
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/toolbar"
+            app:cardCornerRadius="@dimen/activity_horizontal_margin"
+            app:cardElevation="@dimen/activity_horizontal_margin"
+            app:cardUseCompatPadding="true">
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                app:cardCornerRadius="@dimen/activity_horizontal_margin"
-                app:cardElevation="@dimen/activity_horizontal_margin"
-                app:cardUseCompatPadding="true">
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/productThumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:contentDescription="@string/app_name"
+                        app:imageUrl="@{detailedProduct.defaultImageUrl}" />
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/productThumbnail"
+                    android:text="@{product.productName}"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@{product.price}"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@android:color/darker_gray" />
 
                 <LinearLayout
+                    android:id="@+id/offerDetails"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="vertical"
-                    android:padding="@dimen/activity_horizontal_margin">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:orientation="horizontal">
 
                     <RelativeLayout
+                        android:id="@+id/textWithStrikeThrough"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clipChildren="false"
-                        android:clipToPadding="false">
+                        android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/productThumbnail"
-                            android:layout_width="match_parent"
-                            android:layout_height="250dp"
-                            android:contentDescription="@string/app_name"
-                            app:imageUrl="@{product.thumbnailImageUrl}" />
+                        <TextView
+                            android:id="@+id/productOriginalPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:text="@{product.originalPrice}"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
 
-
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="3px"
+                            android:layout_alignLeft="@+id/productOriginalPrice"
+                            android:layout_alignRight="@+id/productOriginalPrice"
+                            android:layout_centerVertical="true"
+                            android:background="@android:color/black" />
                     </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/productName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/productThumbnail"
-                        android:text="@{product.productName}"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/productPrice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@{product.price}"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2px"
-                        android:background="@android:color/darker_gray" />
-
-                    <LinearLayout
-                        android:id="@+id/offerDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="@dimen/activity_horizontal_margin"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:id="@+id/textWithStrikeThrough"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/productOriginalPrice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="4dp"
-                                android:paddingRight="4dp"
-                                android:text="@{product.originalPrice}"
-                                android:textColor="@android:color/black"
-                                android:textSize="16sp" />
-
-                            <View
-                                android:layout_width="wrap_content"
-                                android:layout_height="3px"
-                                android:layout_alignLeft="@+id/productOriginalPrice"
-                                android:layout_alignRight="@+id/productOriginalPrice"
-                                android:layout_centerVertical="true"
-                                android:background="@android:color/black" />
-                        </RelativeLayout>
-
-                        <TextView
-                            android:id="@+id/productDiscount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                            android:text="@{product.percentOff}"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/productSaved"
+                        android:id="@+id/productDiscount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-
-                        android:text="@{product.moneySaved}"
-                        android:textColor="@android:color/black"
+                        android:text="@{product.percentOff}"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/productSaved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
 
-            </android.support.v7.widget.CardView>
-        </ScrollView>
+                    android:text="@{product.moneySaved}"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/description"
+                            android:textColor="@android:color/black"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
 
         <ImageView
             android:id="@+id/copy"
@@ -150,8 +164,9 @@
             android:layout_below="@+id/toolbar"
             android:layout_margin="@dimen/activity_2_horizontal_margin"
             android:contentDescription="@string/app_name"
+            android:translationZ="@dimen/activity_2_horizontal_margin"
             android:visibility="invisible"
-            app:imageUrl="@{product.thumbnailImageUrl}" />
+            app:imageUrl="@{detailedProduct.defaultImageUrl}" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_to_cart"
