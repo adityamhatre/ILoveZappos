@@ -26,12 +26,14 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.zappos.com"
+                    android:host="share.zappos.com"
                     android:pathPrefix="/zappos"
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ProductViewActivity" android:theme="@style/NoActionBar"/>
+        <activity
+            android:name=".Activities.ProductViewActivity"
+            android:theme="@style/NoActionBar" />
     </application>
 
 </manifest>

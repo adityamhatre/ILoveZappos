@@ -37,35 +37,53 @@
             app:cardElevation="@dimen/activity_horizontal_margin"
             app:cardUseCompatPadding="true">
 
-            <LinearLayout
+            <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:padding="@dimen/activity_horizontal_margin">
+
 
                 <ImageView
-                    android:id="@+id/productThumbnail"
-                    android:layout_width="match_parent"
+                    android:id="@+id/productImage"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:contentDescription="@string/app_name"
-                    android:padding="2dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_placeholder"
+                    android:scaleType="fitCenter"
                     app:imageUrl="@{detailedProduct.defaultImageUrl}" />
+
+                <ImageView
+                    android:id="@+id/copy_productImage"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:translationZ="@dimen/activity_2_horizontal_margin"
+                    android:visibility="invisible"
+                    app:imageUrl="@{detailedProduct.defaultImageUrl}" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/add_to_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_cart"
+                    app:elevation="@dimen/activity_horizontal_margin"
+                    app:fabSize="normal"
+                    app:useCompatPadding="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="@dimen/activity_horizontal_margin">
+                    android:layout_toEndOf="@+id/productImage"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/productName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/productThumbnail"
                         android:text="@{product.productName}"
                         android:textColor="@android:color/black"
                         android:textSize="24sp" />
@@ -74,12 +92,12 @@
                         android:id="@+id/productPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:text="@{product.price}"
                         android:textColor="@android:color/black"
                         android:textSize="20sp" />
 
                     <View
+                        android:id="@+id/separator"
                         android:layout_width="match_parent"
                         android:layout_height="2px"
                         android:background="@android:color/darker_gray" />
@@ -88,7 +106,7 @@
                         android:id="@+id/offerDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
                         android:orientation="horizontal">
 
@@ -110,8 +128,8 @@
                             <View
                                 android:layout_width="wrap_content"
                                 android:layout_height="3px"
-                                android:layout_alignLeft="@+id/productOriginalPrice"
-                                android:layout_alignRight="@+id/productOriginalPrice"
+                                android:layout_alignEnd="@+id/productOriginalPrice"
+                                android:layout_alignStart="@+id/productOriginalPrice"
                                 android:layout_centerVertical="true"
                                 android:background="@android:color/black" />
                         </RelativeLayout>
@@ -120,7 +138,7 @@
                             android:id="@+id/productDiscount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
                             android:text="@{product.percentOff}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="16sp" />
@@ -130,7 +148,8 @@
                         android:id="@+id/productSaved"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
 
                         android:text="@{product.moneySaved}"
                         android:textColor="@android:color/black"
@@ -138,61 +157,26 @@
 
                     <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/description"
-                            android:textColor="@android:color/black"
-                            android:textSize="14sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/description"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
                     </ScrollView>
                 </LinearLayout>
-            </LinearLayout>
+
+            </RelativeLayout>
+
         </android.support.v7.widget.CardView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:translationZ="@dimen/activity_2_horizontal_margin"
-            android:weightSum="2">
-
-            <ImageView
-                android:id="@+id/copy"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_2_horizontal_margin"
-                android:layout_weight="1"
-                android:contentDescription="@string/app_name"
-                android:padding="@dimen/activity_horizontal_margin"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_placeholder"
-                android:visibility="invisible"
-                app:imageUrl="@{detailedProduct.defaultImageUrl}" />
-
-        </LinearLayout>
-        <!--<ImageView
-            android:id="@+id/copy"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:visibility="invisible"
-            app:imageUrl="@{detailedProduct.defaultImageUrl}" />-->
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_to_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:clickable="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_cart"
-            app:elevation="@dimen/activity_horizontal_margin"
-            app:fabSize="normal"
-            app:useCompatPadding="true" />
-
     </RelativeLayout>
 </layout>

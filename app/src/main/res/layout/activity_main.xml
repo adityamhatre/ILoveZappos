@@ -1,49 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context="com.thelegacycoder.ILoveZappos.Activities.MainActivity">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <EditText
-                android:id="@+id/search_box"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/search_button"
-                android:hint="Search"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLines="1" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/search_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:clickable="true"
-                android:src="@drawable/ic_search" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
 
     <LinearLayout
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end">
+        android:gravity="end"
+        android:translationZ="@dimen/activity_2_horizontal_margin">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,17 +23,17 @@
     </LinearLayout>
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
         android:id="@+id/list_container"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:visibility="gone"
         app:cardElevation="@dimen/activity_horizontal_margin">
 
         <GridView
             android:id="@+id/grid_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="1"
-            android:visibility="visible" />
+            android:layout_height="match_parent"
+            android:numColumns="1"/>
     </android.support.v7.widget.CardView>
-</LinearLayout>
+</RelativeLayout>

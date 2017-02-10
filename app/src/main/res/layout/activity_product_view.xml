@@ -37,32 +37,50 @@
             app:cardElevation="@dimen/activity_horizontal_margin"
             app:cardUseCompatPadding="true">
 
-            <LinearLayout
+            <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="@dimen/activity_horizontal_margin">
 
-                <RelativeLayout
+
+                <ImageView
+                    android:id="@+id/productImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    app:imageUrl="@{detailedProduct.defaultImageUrl}" />
+
+                <ImageView
+                    android:id="@+id/copy_productImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:contentDescription="@string/app_name"
+                    android:translationZ="@dimen/activity_2_horizontal_margin"
+                    android:visibility="invisible"
+                    app:imageUrl="@{detailedProduct.defaultImageUrl}" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/add_to_cart"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/productThumbnail"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:contentDescription="@string/app_name"
-                        app:imageUrl="@{detailedProduct.defaultImageUrl}" />
-
-
-                </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_cart"
+                    app:elevation="@dimen/activity_horizontal_margin"
+                    app:fabSize="normal"
+                    app:useCompatPadding="true" />
 
 
                 <TextView
                     android:id="@+id/productName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/productThumbnail"
+                    android:layout_below="@+id/productImage"
                     android:text="@{product.productName}"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
@@ -71,20 +89,24 @@
                     android:id="@+id/productPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/productName"
                     android:layout_centerInParent="true"
                     android:text="@{product.price}"
                     android:textColor="@android:color/black"
                     android:textSize="20sp" />
 
                 <View
+                    android:id="@+id/separator"
                     android:layout_width="match_parent"
                     android:layout_height="2px"
+                    android:layout_below="@+id/productPrice"
                     android:background="@android:color/darker_gray" />
 
                 <LinearLayout
                     android:id="@+id/offerDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/separator"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:orientation="horizontal">
@@ -127,6 +149,7 @@
                     android:id="@+id/productSaved"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/offerDetails"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
 
                     android:text="@{product.moneySaved}"
@@ -135,7 +158,8 @@
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/productSaved">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -151,35 +175,11 @@
 
                     </LinearLayout>
                 </ScrollView>
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </android.support.v7.widget.CardView>
 
-
-        <ImageView
-            android:id="@+id/copy"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_below="@+id/toolbar"
-            android:layout_margin="@dimen/activity_2_horizontal_margin"
-            android:contentDescription="@string/app_name"
-            android:translationZ="@dimen/activity_2_horizontal_margin"
-            android:visibility="invisible"
-            app:imageUrl="@{detailedProduct.defaultImageUrl}" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_to_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:clickable="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_cart"
-            app:elevation="@dimen/activity_horizontal_margin"
-            app:fabSize="normal"
-            app:useCompatPadding="true" />
 
     </RelativeLayout>
 </layout>
