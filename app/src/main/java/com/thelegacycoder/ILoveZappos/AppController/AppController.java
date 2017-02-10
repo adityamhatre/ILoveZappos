@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 
 import com.thelegacycoder.ILoveZappos.Models.ProductItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Retrofit;
@@ -25,6 +26,7 @@ public class AppController extends Application {
     private Context context;
     private ProgressDialog progressDialog;
     private List<ProductItem> products;
+    private List<ProductItem> productsInCart = new ArrayList<>();
 
     //http://stackoverflow.com/questions/4457042/best-practice-for-updating-writing-to-static-variable
     private static final Object lock = new Object();
@@ -58,6 +60,7 @@ public class AppController extends Application {
 
     public void showLoading(Context context) {
         this.context = context;
+        System.out.println(context.toString());
         progressDialog = new ProgressDialog(this.context);
         progressDialog.setMessage("Loading...");
         progressDialog.setIndeterminate(true);
@@ -66,7 +69,7 @@ public class AppController extends Application {
         progressDialog.show();
     }
 
-    public void setOnLoadingCancelListener(DialogInterface.OnCancelListener onLoadingCancelListener){
+    public void setOnLoadingCancelListener(DialogInterface.OnCancelListener onLoadingCancelListener) {
         progressDialog.setOnCancelListener(onLoadingCancelListener);
     }
 
@@ -80,7 +83,19 @@ public class AppController extends Application {
         this.products = products;
     }
 
+    public void addProductToCart(ProductItem productItem) {
+        productsInCart.add(productItem);
+    }
+
+    public List<ProductItem> getProductsInCart() {
+        return productsInCart;
+    }
+
     public List<ProductItem> getProducts() {
         return products;
+    }
+
+    public void removeFromCart(int index) {
+        productsInCart.remove(index);
     }
 }

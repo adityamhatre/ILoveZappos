@@ -17,7 +17,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.thelegacycoder.ILoveZappos.Adapters.ListViewAdapter;
+import com.thelegacycoder.ILoveZappos.Adapters.ProductsAdapter;
 import com.thelegacycoder.ILoveZappos.AppController.AppController;
 import com.thelegacycoder.ILoveZappos.Interfaces.ZapposAPI;
 import com.thelegacycoder.ILoveZappos.Models.ProductItem;
@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements Callback<SearchAPIResponse> {
     private GridView gridView;
     private ZapposAPI zapposAPI;
-    private ListViewAdapter listViewAdapter;
+    private ProductsAdapter productsAdapter;
     private Call<SearchAPIResponse> call;
     private View searchView;
     private Boolean firstTime = true;
@@ -42,16 +42,21 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
     private SearchView searchProductView;
     private String searchQuery;
     private boolean sharing;
+    private boolean splash = true;
     private int index;
+
+    private ImageView shoes, shorts, shirts, tee, blazer, jeans, pajama, jacket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         initViews();
         initActionListeners();
         initAPI();
+
 
         Uri data = getIntent().getData();
         if (data != null) {
@@ -79,17 +84,28 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
         }
     }
 
+
     private void initViews() {
         gridView = (GridView) findViewById(R.id.grid_view);
         searchView = findViewById(R.id.search_view);
         listContainer = findViewById(R.id.list_container);
 
+
+        shoes = (ImageView) findViewById(R.id.shoes);
+        shorts = (ImageView) findViewById(R.id.shorts);
+        shirts = (ImageView) findViewById(R.id.shirt);
+        tee = (ImageView) findViewById(R.id.tee);
+        blazer = (ImageView) findViewById(R.id.blazer);
+        jeans = (ImageView) findViewById(R.id.jeans);
+        pajama = (ImageView) findViewById(R.id.pajama);
+        jacket = (ImageView) findViewById(R.id.jacket);
+
         searchProductView = new SearchView(this);
         searchProductView.setSubmitButtonEnabled(true);
-        searchProductView.setQueryHint("Search");
+        searchProductView.setQueryHint("shoes, winter wear,  etc");
 
         ((EditText) searchProductView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setTextColor(Color.WHITE);
-        ((EditText) searchProductView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(Color.GRAY);
+        ((EditText) searchProductView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(Color.LTGRAY);
         ImageView imageView = ((ImageView) searchProductView.findViewById(android.support.v7.appcompat.R.id.search_button));
         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         imageView.setImageResource(R.drawable.ic_search);
@@ -115,6 +131,55 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
         });
 
 
+        shoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct("shoes");
+            }
+        });
+        shorts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct("shorts");
+            }
+        });
+        shirts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct("shirts");
+            }
+        });
+        tee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct("tee");
+            }
+        });
+        blazer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct("blazer");
+            }
+        });
+        jeans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct("jeans");
+            }
+        });
+        pajama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct("pajama");
+            }
+        });
+        jacket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct("jacket");
+            }
+        });
+
         searchProductView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -134,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
     }
 
     private void searchProduct(String searchTerm) {
+        splash = false;
         if (searchTerm != null && !searchTerm.isEmpty()) {
             call = zapposAPI.searchQuery(searchTerm, getString(R.string.zappos_key));
             AppController.getInstance().showLoading(this);
@@ -173,13 +239,13 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
         if (response.body().getResults().size() != 0) {
             if (firstTime) {
                 productItemList = response.body().getResults();
-                listViewAdapter = new ListViewAdapter(this, productItemList);
-                gridView.setAdapter(listViewAdapter);
+                productsAdapter = new ProductsAdapter(this, productItemList);
+                gridView.setAdapter(productsAdapter);
                 firstTime = false;
             } else {
                 productItemList.clear();
                 productItemList.addAll(response.body().getResults());
-                listViewAdapter.notifyDataSetChanged();
+                productsAdapter.notifyDataSetChanged();
             }
 
             showContainer();
@@ -190,14 +256,24 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
             Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
             if (productItemList != null)
                 productItemList.clear();
-            if (listViewAdapter != null) {
-                listViewAdapter.notifyDataSetChanged();
+            if (productsAdapter != null) {
+                productsAdapter.notifyDataSetChanged();
             }
 
             hideContainer();
         }
 
         AppController.getInstance().dismissLoading();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!splash) {
+            splash = true;
+            hideContainer();
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override
