@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
     private int index;
 
     private ImageView shoes, shorts, shirts, tee, blazer, jeans, pajama, jacket;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -271,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
         if (!splash) {
             splash = true;
             hideContainer();
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
@@ -284,8 +285,33 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        menu.add("Cart").setIcon(AppController.getInstance().getProductsInCart() != null && AppController.getInstance().getProductsInCart().size() != 0 ? R.drawable.ic_cart_full : R.drawable.ic_cart).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if (AppController.getInstance().getProductsInCart().size() != 0) {
+                    startActivity(new Intent(MainActivity.this, CartActivity.class));
+                } else {
+                    Toast.makeText(MainActivity.this, "No items in cart", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        }).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
         menu.add("Search").setActionView(searchProductView).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        this.menu = menu;
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        if (menu != null && menu.getItem(0) != null) {
+            if (AppController.getInstance().getProductsInCart().size() != 0)
+                menu.getItem(0).setIcon(R.drawable.ic_cart_full);
+            else menu.getItem(0).setIcon(R.drawable.ic_cart);
+        }
+        super.onResume();
     }
 
     @Override
