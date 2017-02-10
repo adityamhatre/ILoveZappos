@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 212 && resultCode == 200) {
-            hideContainer();
+            onBackPressed();
         }
 
     }
