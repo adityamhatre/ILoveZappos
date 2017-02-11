@@ -9,7 +9,7 @@
     tools:context="com.thelegacycoder.ILoveZappos.Activities.MainActivity">
 
     <LinearLayout
-        android:id="@+id/search_view"
+        android:id="@+id/menu_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

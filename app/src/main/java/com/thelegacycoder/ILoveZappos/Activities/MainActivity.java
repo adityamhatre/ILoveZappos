@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
     private ZapposAPI zapposAPI;
     private ProductsAdapter productsAdapter;
     private Call<SearchAPIResponse> call;
-    private View searchView;
+    private View menuView;
     private Boolean firstTime = true;
     private List<ProductItem> productItemList;
     private View listContainer;
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
 
     private ImageView shoes, shorts, shirts, tee, blazer, jeans, pajama, jacket;
     private Menu menu;
+    private boolean listShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,14 +82,15 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
 
 
         if (savedInstanceState != null && savedInstanceState.containsKey("search")) {
-            searchProduct(savedInstanceState.getString("search"));
+            if (listShowing = savedInstanceState.getBoolean("listShowing"))
+                searchProduct(searchQuery = savedInstanceState.getString("search"));
         }
     }
 
 
     private void initViews() {
         gridView = (GridView) findViewById(R.id.grid_view);
-        searchView = findViewById(R.id.search_view);
+        menuView = findViewById(R.id.menu_view);
         listContainer = findViewById(R.id.list_container);
 
 
@@ -135,49 +137,49 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
         shoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchProduct("shoes");
+                searchProduct(searchQuery = "shoes");
             }
         });
         shorts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchProduct("shorts");
+                searchProduct(searchQuery = "shorts");
             }
         });
         shirts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchProduct("shirts");
+                searchProduct(searchQuery = "shirts");
             }
         });
         tee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchProduct("tee");
+                searchProduct(searchQuery = "tee");
             }
         });
         blazer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchProduct("blazer");
+                searchProduct(searchQuery = "blazer");
             }
         });
         jeans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchProduct("jeans");
+                searchProduct(searchQuery = "jeans");
             }
         });
         pajama.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchProduct("pajama");
+                searchProduct(searchQuery = "pajama");
             }
         });
         jacket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchProduct("jacket");
+                searchProduct(searchQuery = "jacket");
             }
         });
 
@@ -210,12 +212,14 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
 
     private void hideContainer() {
         listContainer.setVisibility(View.GONE);
-        searchView.setVisibility(View.VISIBLE);
+        listShowing = false;
+        menuView.setVisibility(View.VISIBLE);
     }
 
     private void showContainer() {
         listContainer.setVisibility(View.VISIBLE);
-        searchView.setVisibility(View.GONE);
+        listShowing = true;
+        menuView.setVisibility(View.GONE);
     }
 
     private void hideKeyboard(View view) {
@@ -234,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
 
     @Override
     public void onResponse(Call<SearchAPIResponse> call, Response<SearchAPIResponse> response) {
-        searchView.setVisibility(View.GONE);
+        menuView.setVisibility(View.GONE);
         AppController.getInstance().setProducts(response.body().getResults());
 
         if (response.body().getResults().size() != 0) {
@@ -314,9 +318,11 @@ public class MainActivity extends AppCompatActivity implements Callback<SearchAP
         super.onResume();
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("search", searchQuery);
+        outState.putBoolean("listShowing", listShowing);
         super.onSaveInstanceState(outState);
     }
 }
